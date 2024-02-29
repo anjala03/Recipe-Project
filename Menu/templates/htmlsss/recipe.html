@@ -1,5 +1,6 @@
 
 {% extends "base.html" %}
+{% load static %}
 {% block start %}
 <div> <a href="{% url 'mainpage' %}"> MainPage </a>
     <div class="container">
@@ -52,6 +53,39 @@
         <button type="submit" class="btn btn-primary">Add Recipe </button>
       </form>
  
+  </div>
+  <br>
+  <div class="container">
+    <table  class="table table-bordered">
+      
+      <thead>
+        <tr>
+          <th scope="col">S.N</th>
+          <th scope="col">Recipe</th>
+          <th scope="col">Veges</th>
+          <th scope="col">Recipe Desc</th>
+          <th scope="col">Recipe Image</th>
+          <th scope="col">Actions</th>
+
+        </tr>
+      </thead>
+      <tbody>
+     <!-- remember to keep for loop out of tr-->
+        {% for each_query in recipes %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{each_query.recipe_name}}</td>
+            <td>{{each_query.veg_included}}</td>
+            <td>{{each_query.recipe_descrip}}</td>
+            <td>
+              <!-- class="img img-fluid" this adjusts the picture in the proper size by default -->
+              <img class="img img-fluid" src="/media/{{each_query.veg_image}}" alt="My image"> </td>
+            <td> <a href= "/delete_recipe/{{recipe.id}}"</a> <button type="submit" class="btn btn-danger">Delete </button> </td>
+        </tr>
+        {% endfor %}
+        </tr>
+      </tbody>
+    </table> 
   </div>
 {% endblock%}
 

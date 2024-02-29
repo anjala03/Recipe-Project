@@ -15,10 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
 from Menu.views import *
+from django.conf import settings
+#settings and static must be imported for media
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('mainpage/', mainpage, name="mainpage"),
     path('recipe/', recipe, name="recipe"),
+    path('delete/<id>/', delete_recipe, name="delete_recipe"),
+
 ]
+# this (the below if sectio) has to be done for every media files
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

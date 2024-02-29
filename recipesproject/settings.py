@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
+#for media need to import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -127,3 +128,10 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# this has to be added for media files, all is similar to almost all, the only difference is in the value of MEDIA. The value should be the folder where the images are loaded. Here 'veges'
+MEDIA = 'media'
+
+MEDIA_URL = f'/{MEDIA}/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA)
