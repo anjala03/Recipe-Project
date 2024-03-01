@@ -34,6 +34,20 @@ def recipe(request):
     return render(request, "htmlsss/recipe.html",context)
 
 def delete_recipe(request, id):
-    queryset=Recipe.objects.get(id=id)
+    print(id)
+    queryset=Recipe.objects.get(id = id)
     queryset.delete()
     return redirect("/recipe/")
+
+def search_recipe(request):
+    if request.method=="POST":
+        recipe_Name=request.POST.get("query")
+        desired_recipe=Recipe.objects.filter(recipe_name=recipe_Name)
+        context={"desired_recipe":desired_recipe}
+        return render(request, "htmlsss/search_recipe.html", context)
+    return render(request, "recipe.html")
+    
+    
+
+
+    

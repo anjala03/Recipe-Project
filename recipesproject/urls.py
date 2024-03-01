@@ -20,11 +20,15 @@ from Menu.views import *
 from django.conf import settings
 #settings and static must be imported for media
 
+# app_name = "Menu"
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('mainpage/', mainpage, name="mainpage"),
     path('recipe/', recipe, name="recipe"),
-    path('delete/<id>/', delete_recipe, name="delete_recipe"),
+    path('delete/<int:id>/', delete_recipe, name="delete"),
+    path('search/', search_recipe, name="search"),
+
+
 
 ]
 # this (the below if sectio) has to be done for every media files

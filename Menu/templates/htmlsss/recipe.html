@@ -18,8 +18,9 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                   </li>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search Recipes Here" aria-label="Search">
+                <form class="d-flex" role="search" method="post" action= "{% url 'search' %}">
+                  {% csrf_token %}
+                  <input class="form-control me-2" type="text" name="query" placeholder="Search Recipes Here" aria-label="Search">
                   <button class="btn btn-outline-success" type="submit">Search </button>
                 </form>
               </div>
@@ -55,6 +56,7 @@
  
   </div>
   <br>
+  <br>
   <div class="container">
     <table  class="table table-bordered">
       
@@ -80,7 +82,7 @@
             <td>
               <!-- class="img img-fluid" this adjusts the picture in the proper size by default -->
               <img class="img img-fluid" src="/media/{{each_query.veg_image}}" alt="My image"> </td>
-            <td> <a href= "/delete_recipe/{{recipe.id}}"</a> <button type="submit" class="btn btn-danger">Delete </button> </td>
+            <td> <a href= "{% url 'delete' id=each_query.id %}"</a> <button type="submit" class="btn btn-danger">Delete </button> </td>
         </tr>
         {% endfor %}
         </tr>

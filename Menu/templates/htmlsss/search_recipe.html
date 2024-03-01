@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block start %}
+<div class="container">
+    {% if desired_recipe %}
+        {% for recipe in desired_recipe %}
+           Congratulations Recipe found!!!
+           <h3> {{recipe.recipe_name}} </h3> 
+           {{recipe.recipe_descrip}}
+           <img class="img img-fluid" src="/media/{{recipe.veg_image}}" alt="My image" style= "float: right;" align="right"> 
+        {% endfor %}
+    {% else %}
+    <p>  Recipe not found, Try something else. Meanwhile you can look at other available recipes in our website... </p> 
+    <ul>
+        <li>{{each_query.recipe_name}}</li>
+    </ul>
+    {% endif %}
+
+</div>
+{% endblock %}
+{% block title %}
+Recipe Search page
+{% endblock %}
