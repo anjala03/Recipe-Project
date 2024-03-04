@@ -24,9 +24,11 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('mainpage/', mainpage, name="mainpage"),
-    path('recipe/', recipe, name="recipe"),
+    path('addrecipe/', recipe, name="recipe"),
     path('delete/<int:id>/', delete_recipe, name="delete"),
     path('search/', search_recipe, name="search"),
+    path('show_recipes/', show_recipes, name="show_recipes"),
+  
 
 
 

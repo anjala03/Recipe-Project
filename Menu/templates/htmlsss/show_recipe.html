@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block start %}
+<a href="{% url 'recipe' %}"> recipe </a>
+<div class="container">
+    {% for each_recipe in recipes %}
+    <!-- <h2> <a href="{{each_recipe.recipe_name}}" > </a> </h2> -->
+   <b> {{each_recipe.recipe_name}} : </b>
+    {{each_recipe.recipe_descrip}}
+    <br> 
+    <img class="img img-fluid" src="{{ each_recipe.veg_image.url }}" alt="My image"> 
+<br>
+    <br>
+    <br>
+    <br>
+
+    {% endfor %}
+</div>
+{% endblock %}
+{% block title %}
+Display Recipe  page
+{% endblock %}

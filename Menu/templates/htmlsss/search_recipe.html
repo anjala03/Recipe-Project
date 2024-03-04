@@ -3,10 +3,20 @@
 <div class="container">
     {% if desired_recipe %}
         {% for recipe in desired_recipe %}
-           Congratulations Recipe found!!!
-           <h3> {{recipe.recipe_name}} </h3> 
-           {{recipe.recipe_descrip}}
-           <img class="img img-fluid" src="/media/{{recipe.veg_image}}" alt="My image" style= "float: right;" align="right"> 
+           <i> Congratulations Recipe found!!! </i>
+           <h4> {{recipe.recipe_name}} </h4> 
+           <b> Recipe description:</b> {{recipe.recipe_descrip}}
+           <img class="img img-fluid" src="/media/{{recipe.veg_image}}" alt="My image" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"" >
+           <br>
+           <br>
+        
+           Here are other recipes we have got, you could give it a look.
+        <h4> The Recipes </h4>
+        <ul>
+            {% for each_query in recipes %}
+            <li>{{each_query.recipe_name}} </li>
+            {% endfor %}
+        </ul>
         {% endfor %}
     {% else %}
     <p>  Recipe not found, Try something else. Meanwhile you can look at other available recipes in our website... </p> 
