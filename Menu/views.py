@@ -5,7 +5,6 @@ from Menu.models import Recipe
 # Create your views here.
 def mainpage(request):
     return render(request, "base.html")
-@csrf_exempt
 def recipe(request):
     if request.method=="POST":
         data=request.POST # this can only be used to get the text data, for files such image, use request.FILES method as below
@@ -26,13 +25,13 @@ def recipe(request):
         )
         # return redirect("/recipe/")
 
-        return render(request, "htmlsss/recipe.html", context= {"recipe_name": recipe_name, "veg_included": veg_included, "recipe_descrip":recipe_descrip,"veg_image": veg_image})
+        return render(request, "htmlsss/add_recipe.html", context= {"recipe_name": recipe_name, "veg_included": veg_included, "recipe_descrip":recipe_descrip,"veg_image": veg_image})
         #without redirect everytime you reload a message will pop, after using it it will not show and directly reloads
         # return redirect("/recipe/")
     #this is to visualize in frontend
     elif(request.method=="GET"):
-        return render(request, "htmlsss/recipe.html", context= {"recipe_name": [], "veg_included": [], "recipe_descrip":[],"veg_image": []})
-
+        return render(request, "htmlsss/add_recipe.html", context= {"recipe_name": [], "veg_included": [], "recipe_descrip":[],"veg_image": []})
+#this is done because as  whenever you use post method there is by default the usecase of get method  which will show the template only, so the empty list is parsed there
 
 
 
