@@ -1,22 +1,55 @@
 {% extends "base.html" %}
 {% load static %}
 {% block start %}
-<a href="{% url 'recipe' %}"> recipe </a>
-<div class="container">
-    {% for each_recipe in recipes %}
-    <!-- <h2> <a href="{{each_recipe.recipe_name}}" > </a> </h2> -->
-   <b> {{each_recipe.recipe_name}} : </b>
-    {{each_recipe.recipe_descrip}}
-    <br> 
-    <img class="img img-fluid" src="{{ each_recipe.veg_image.url }}" alt="My image"> 
-<br>
-    <br>
-    <br>
-    <br>
-
-    {% endfor %}
+<a href="{% url 'add_recipe' %}"> Add Recipe </a>
+    <div class="container">
+        <table  class="table table-bordered">
+          
+          <thead>
+            <tr>
+              <th scope="col">S.N</th>
+              <th scope="col">Recipe</th>
+              <th scope="col">Veges</th>
+              <th scope="col">Recipe Desc</th>
+              <th scope="col">Recipe Image</th>
+              <th scope="col">Actions</th>
+    
+            </tr>
+          </thead>
+          <tbody>
+         <!-- remember to keep for loop out of tr-->
+            {% for each_query in recipes %}
+            <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{each_query.recipe_name}}</td>
+                <td>{{each_query.veg_included}}</td>
+                <td>{{each_query.recipe_descrip}}</td>
+                <td>
+                  <!-- class="img img-fluid" this adjusts the picture in the proper size by default -->
+                  <img class="img img-fluid" src="/media/{{each_query.veg_image}}" alt="My image"> </td>
+                <td> <a href= "{% url 'delete_recipe' id=each_query.id %}"</a> <button type="submit" class="btn btn-danger">Delete </button> </td>
+            </tr>
+            {% endfor %}
+            </tr>
+          </tbody>
+        </table> 
 </div>
 {% endblock %}
 {% block title %}
 Display Recipe  page
 {% endblock %}
+<!-- <div class="container"> -->
+<!--     {% for each_recipe in recipes %} -->
+<!--     <!-- <h2> <a href="{{each_recipe.recipe_name}}" > </a> </h2> -->
+<!--    <b> {{each_recipe.recipe_name}} : </b>-->
+<!--     {{each_recipe.recipe_descrip}}-->
+<!--     <br> 
+<!--     <img class="img img-fluid" src="{{ each_recipe.veg_image.url }}" alt="My image"> -->
+<!-- <br>-->
+<!--     <br>-->
+<!--     <br>-->
+<!--     <br>-->
+<!-- -->
+<!--     {% endfor %}-->
+<!-- </div>-->
+<!-- <div>-->

@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from Menu.models import Recipe
 # Create your views here.
-def mainpage(request):
+def basepage(request):
     return render(request, "base.html")
-def recipe(request):
+
+def add_recipe(request):
     if request.method=="POST":
         data=request.POST # this can only be used to get the text data, for files such image, use request.FILES method as below
         veg_image=request.FILES.get("veg_image")
@@ -23,11 +25,13 @@ def recipe(request):
           recipe_descrip=recipe_descrip,
           veg_image=veg_image
         )
-        # return redirect("/recipe/")
+        return redirect("/success_msg/")
 
-        return render(request, "htmlsss/add_recipe.html", context= {"recipe_name": recipe_name, "veg_included": veg_included, "recipe_descrip":recipe_descrip,"veg_image": veg_image})
+        return render(request, "htmlsss/add_recipe.html", context= {"recipe_name":recipe_name, "veg_included":veg_included,"recipe_descrip":recipe_descrip, "veg_image" :veg_image})
         #without redirect everytime you reload a message will pop, after using it it will not show and directly reloads
-        # return redirect("/recipe/")
+       
+    
+
     #this is to visualize in frontend
     elif(request.method=="GET"):
         return render(request, "htmlsss/add_recipe.html", context= {"recipe_name": [], "veg_included": [], "recipe_descrip":[],"veg_image": []})
@@ -41,11 +45,19 @@ def show_recipes(request):
     #this context is parsed in recipe.html   
     return render(request, "htmlsss/show_recipe.html",context)
 
+
+
 def delete_recipe(request, id):
-    print(id)
-    queryset=Recipe.objects.get(id = id)
-    queryset.delete()
-    return redirect("/recipe/")
+    recipe = get_object_or_404(Recipe, id=id)
+    recipe.delete()
+    return redirect("/show_recipes")
+
+
+#def delete_recipe(request, id):
+#    print(id)
+#    queryset=Recipe.objects.get(id = id)
+#    queryset.delete()
+#    return redirect("/show_recipes")
 
 def search_recipe(request):
     if request.method=="POST":
@@ -55,6 +67,8 @@ def search_recipe(request):
         return render(request, "htmlsss/search_recipe.html", context)
     return render(request, "recipe.html")
     
+def success_msg(request):
+    return render (request, "htmlsss/success.html")
     
 
 

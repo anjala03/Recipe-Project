@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block start %}
+
+<p><i> Recipe Added Successfully. Thanks for your time and contributions...... </i> </p>
+<a href= "{% url 'add_recipe' %}"> Go back to add page |  </a>
+<br> 
+<a href= "{% url 'show_recipes' %}"> Show Recipes </a>
+
+{% endblock %}
+{% block title %}
+Success Page
+{% endblock %}

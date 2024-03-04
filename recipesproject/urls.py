@@ -23,11 +23,13 @@ from django.conf import settings
 # app_name = "Menu"
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('mainpage/', mainpage, name="mainpage"),
-    path('addrecipe/', recipe, name="recipe"),
-    path('delete/<int:id>/', delete_recipe, name="delete"),
+    path('basepage/', basepage, name="basepage"),
+    path('add_recipe/', add_recipe, name="add_recipe"),
+    path('delete/<int:id>/', delete_recipe, name="delete_recipe"),
     path('search/', search_recipe, name="search"),
     path('show_recipes/', show_recipes, name="show_recipes"),
+    path('success_msg/', success_msg, name="success_msg"),
+
   
 
 
