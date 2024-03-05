@@ -29,6 +29,9 @@ urlpatterns = [
     path('search/', search_recipe, name="search"),
     path('show_recipes/', show_recipes, name="show_recipes"),
     path('success_msg/', success_msg, name="success_msg"),
+    path('login/', login, name="login"),
+    path('register/', register, name="register"),
+
 
   
 
