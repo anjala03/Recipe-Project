@@ -28,6 +28,7 @@ urlpatterns = [
     path('delete/<int:id>/', delete_recipe, name="delete_recipe"),
     path('search/', search_recipe, name="search"),
     path('show_recipes/', show_recipes, name="show_recipes"),
+    path('update/<int:id>/', update, name="update"),
     path('success_msg/', success_msg, name="success_msg"),
     path('login/', login, name="login"),
     path('register/', register, name="register"),

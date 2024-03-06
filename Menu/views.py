@@ -61,6 +61,21 @@ def delete_recipe(request, id):
 #    queryset.delete()
 #    return redirect("/show_recipes")
 
+def update(request, id):
+    recipe = get_object_or_404(Recipe, id=id)
+    if request.method=="POST":
+        data=request.POST
+        Recipe_Name=data.get("recipe_name")
+        Veg_Included=data.get("veg_included")
+        Recipe_Descrip=data.get("recipe_descrip")
+        return render(request, "htmlsss/update.html", context={"Recipe_Name":Recipe_Name,"Veg_Included":Veg_Included,"Recipe_Descrip":Recipe_Descrip  })
+    return redirect("/update")   
+
+
+    recipe.update(recipe.recipe_name )
+    return redirect("/update")
+
+
 def search_recipe(request):
     if request.method=="POST":
         recipe_Name=request.POST.get("query").strip()
@@ -85,13 +100,13 @@ def register(request):
         lastname= data.get("lastname")
         username= data.get("username")
         password=data.get("password")
-        User.objects.create_user(
+        User.objects.create(
             username=username,
             password=password,
             first_name=firstname,
             last_name=lastname
             )
-        return render (request, "htmlsss/register.html", context= {"success_msg":"Registration done successfully"})
+        return render (request, "htmlsss/register.html", context= {"success_msg":"Congratulations!!!Registration done successfully"})
     return render(request, "htmlsss/register.html", context={"firstname":[], "lastname":[], "username":[], "password":[]})
 
 
