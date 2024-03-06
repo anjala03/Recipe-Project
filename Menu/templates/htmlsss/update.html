@@ -7,7 +7,7 @@
   <a href="{% url 'show_recipes' %}"> Show Recipe </a>
     
   <div class="container">
-    <form method="post" enctype="multipart/form-data" >
+    <form method="post" action="/update/{{recipe_obj.id}}/" enctype="multipart/form-data" >
         <!--  enctype="multipart/form-data" this is for the image upload ,if this is not used, you cannot upload image -->
         {% csrf_token %}
         <!-- this is used to prevent csrf attack, used only with post method, generates a unique token each time user submits its request. -->
@@ -15,26 +15,27 @@
         <hr>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Recipe Name</label>
-          <input name= "recipe_name" value="recipe_name" required type="text" class="form-control">
+          <input name= "recipe_name" value="{{recipe_obj.recipe_name}}" required type="text" class="form-control">
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Vegetables Included </label>
-          <input name= "veg_included" value="veg_included" required type="text" class="form-control">
+          <input name= "veg_included" value="{{recipe_obj.veg_included}}" required type="text" class="form-control">
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label"> Recipe Description </label>
-            <input name= "recipe_descrip" value="recipe_descrip" required type="text" class="form-control">
+            <input name= "recipe_descrip" value="{{recipe_obj.recipe_descrip}}" required type="text" class="form-control">
           </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label"> Vegetables Image </label>
-          <input name= "veg_image" value="veg_image" type="file" class="form-control">
+          <input name= "veg_image" type="file" class="form-control">
         </div>
         <button type="submit" class="btn btn-success">Update Recipe </button>
       </form>
- 
+      <br>
+
   </div>
   <br>
-  <br>
+
   
 {% endblock%}
 

@@ -1,15 +1,7 @@
 {% extends "base.html"%}
 {% block start %}
-<form method ="Post">
+<form method ="Post" action="/loginpage/">
     {% csrf_token %}
-    <div class="mb-3">
-        <label for="formGroupExampleInput" class="form-label"> <b> First Name </b></label>
-        <input name= "fname" type="text" class="form-control" id="formGroupExampleInput" placeholder="Enter Your First Name ">
-      </div>
-      <div class="mb-3">
-        <label for="formGroupExampleInput2" class="form-label"> <b> Last Name  </b></label>
-        <input  name= "lname" type="text" class="form-control" id="formGroupExampleInput2" placeholder="Enter Your Last Name ">
-      </div>
    
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label"> <b> Username </b> </label>
@@ -24,5 +16,14 @@
     <button type="submit" class="btn btn-primary">Login </button>
   </form>
   <br> 
-  <p> Don't have an account? <a href="{% url 'register' %}"> Register </a>   </p>
+  {% if success_msg %}
+    <div class="alert alert-success" role="alert">
+      {{success_msg}}
+    </div>
+  {% endif %}
+
+  <p> Don't have an account? Register First <a href="{% url 'register' %}"> Register </a>   </p>
+{% endblock %}
+{% block title %}
+Login Page
 {% endblock %}

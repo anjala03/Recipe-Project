@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from Menu.models import Recipe
+from django.contrib import messages
 # Create your views here.
 def basepage(request):
     return render(request, "base.html")
@@ -62,19 +63,27 @@ def delete_recipe(request, id):
 #    return redirect("/show_recipes")
 
 def update(request, id):
-    recipe = get_object_or_404(Recipe, id=id)
+    recipe_obj= get_object_or_404(Recipe, id=id)
     if request.method=="POST":
         data=request.POST
         Recipe_Name=data.get("recipe_name")
         Veg_Included=data.get("veg_included")
         Recipe_Descrip=data.get("recipe_descrip")
-        return render(request, "htmlsss/update.html", context={"Recipe_Name":Recipe_Name,"Veg_Included":Veg_Included,"Recipe_Descrip":Recipe_Descrip  })
-    return redirect("/update")   
 
+        if Recipe_Name:
+          recipe_obj.recipe_name=Recipe_Name
+        if Veg_Included:
+          recipe_obj.veg_included=Veg_Included
+        if Recipe_Descrip:
+          recipe_obj.recipe_descrip=Recipe_Descrip
+        
+        recipe_obj.save()
 
-    recipe.update(recipe.recipe_name )
-    return redirect("/update")
-
+        return redirect("/show_recipes")
+    
+    elif (request.method=="GET"):
+        recipe_obj= get_object_or_404(Recipe, id=id)
+        return render(request, "htmlsss/update.html", context={"recipe_obj":recipe_obj})
 
 def search_recipe(request):
     if request.method=="POST":
@@ -89,8 +98,13 @@ def search_recipe(request):
 def success_msg(request):
     return render (request, "htmlsss/success.html")
     
-def login(request):
+def loginpage(request):
+    if request.method== "POST":
+        data=request.POST
+        username= data.get("username")
+        password=data.get("password")
     return render(request, "htmlsss/login.html")
+      
 
 
 def register(request):
@@ -100,13 +114,20 @@ def register(request):
         lastname= data.get("lastname")
         username= data.get("username")
         password=data.get("password")
-        User.objects.create(
+        
+        if User.objects.filter(username=username).exists():
+            messages.info(request, "Username already exists")
+            return redirect ("/register")
+        user=User.objects.create(
             username=username,
-            password=password,
             first_name=firstname,
             last_name=lastname
             )
-        return render (request, "htmlsss/register.html", context= {"success_msg":"Congratulations!!!Registration done successfully"})
+        #this is done so that password is hashed, the set password method changes password into something that is not understandable.
+        user.set_password(password)
+        user.save()
+
+        return render(request, "htmlsss/register.html", context= {"success_msg":"Congratulations!!!Registration done successfully."})
     return render(request, "htmlsss/register.html", context={"firstname":[], "lastname":[], "username":[], "password":[]})
 
 
