@@ -5,10 +5,15 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from Menu.models import Recipe
 from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def basepage(request):
     return render(request, "base.html")
 
+#login required is the decorators which will ensure that the add recipe page will only be acessed after login is successfull
+
+@login_required
 def add_recipe(request):
     if request.method=="POST":
         data=request.POST # this can only be used to get the text data, for files such image, use request.FILES method as below
@@ -48,7 +53,7 @@ def show_recipes(request):
     return render(request, "htmlsss/show_recipe.html",context)
 
 
-
+@login_required
 def delete_recipe(request, id):
     recipe = get_object_or_404(Recipe, id=id)
     # this is to check if the id is available or not, it wil return none in case no such id is available. Has to pass the modle name as the first parameter
@@ -62,6 +67,7 @@ def delete_recipe(request, id):
 #    queryset.delete()
 #    return redirect("/show_recipes")
 
+@login_required
 def update(request, id):
     recipe_obj= get_object_or_404(Recipe, id=id)
     if request.method=="POST":
@@ -103,7 +109,15 @@ def loginpage(request):
         data=request.POST
         username= data.get("username")
         password=data.get("password")
-    return render(request, "htmlsss/login.html")
+        if User.objects.filter(username=username).exists():
+            #autheticate method is used to check the credentails mapping with the database, if the credentials are right returns the user object else returns the None
+            user=authenticate(username=username, password=password)
+            if user is not None:
+                return redirect ("/add_recipe")
+            messages.info(request, "Invalid User")
+        messages.info(request, "Please register first") 
+
+    return render(request, "htmlsss/login.html", context={"username":[], "password":[]})
       
 
 
@@ -126,8 +140,9 @@ def register(request):
         #this is done so that password is hashed, the set password method changes password into something that is not understandable.
         user.set_password(password)
         user.save()
+        messages.info(request, "Congratulations!!!Registration done successfully.")
 
-        return render(request, "htmlsss/register.html", context= {"success_msg":"Congratulations!!!Registration done successfully."})
+        return redirect("/login")
     return render(request, "htmlsss/register.html", context={"firstname":[], "lastname":[], "username":[], "password":[]})
 
 

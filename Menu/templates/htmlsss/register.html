@@ -1,13 +1,13 @@
 {% extends "base.html"%}
 {% block start %}
-{% if messages %}
 
+{% if messages %}
 <div class="messages">
-  {% for message in messages %}
+    {% for message in messages %}
     <div class="alert alert-success" role="alert">
-     {{ message }}
+      {{ message }}
     </div>
-  {% endfor %}
+    {% endfor %}
 </div>
 {% endif %}
 <br>
@@ -38,14 +38,8 @@
   </form>
   <br>
   <br> 
-{% if success_msg %}
-    <div class="alert alert-success" role="alert">
-        {{success_msg}}
-    </div>
-{% endif %}
-<br>
 
-<p> Already have an account? <a href="{% url 'login' %}">Login </a>   </p>
+<p> Already have an account? <a href="{% url 'loginpage' %}">Login </a>   </p>
 
 
 {% endblock %}
