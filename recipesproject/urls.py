@@ -32,6 +32,9 @@ urlpatterns = [
     path('success_msg/', success_msg, name="success_msg"),
     path('login/', loginpage, name="loginpage"),
     path('register/', register, name="register"),
+    path('logout/', logoutpage, name="logout"),
+
+
 
 
   

@@ -10,7 +10,24 @@
    
 </head>
 
-<body>
+<body> 
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-body-tertiary"> 
+        <div class="container-fluid"> 
+            <div class="ms-auto">
+                <!-- this if is used to show the logout page if user is loged in and to show login if user is logged out::: request.user.is_authenticated is the format -->
+                {% if not request.user.is_authenticated %}
+                    <a href="/login/" class="btn btn-outline-success">login</a>
+                {% else %}
+                    <a href="/logout/" class="btn btn-outline-success">Logout</a>
+                {% endif %}
+            </div>    
+        </div>
+    </nav>
+    <br>
+    <br>
+
+    
    {% block start %}
    <h1> Welcome to the extendable "base" page </h1>
    <a href=" {% url 'add_recipe' %}"> Add Recipe | </a>

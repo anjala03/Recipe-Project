@@ -2,33 +2,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block start %}
-<div> <a href="{% url 'basepage' %}"> Base Page | </a>
-  <br>
-  <a href="{% url 'show_recipes' %}"> Show Recipe </a>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">Navbar</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                <form class="d-flex" role="search" method="post" action= "{% url 'search' %}">
-                  {% csrf_token %}
-                  <input class="form-control me-2" type="text" name="query" placeholder="Search Recipes Here" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search </button>
-                </form>
-              </div>
-            </div>
-          </nav>
-    </div>
 
   <div class="container">
     <form method="post" enctype="multipart/form-data" >
@@ -59,6 +32,19 @@
   </div>
   <br>
   <br>
+  <div class="container">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <form class="d-flex me-auto" role="search" method="post" action="{% url 'search' %}">
+          {% csrf_token %}
+          <input class="form-control me-2" type="text" name="query" placeholder="Search Recipes" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <a href="{% url 'basepage' %}"> Base Page | </a>
+        <a href="{% url 'show_recipes' %}"> Show Recipe </a>
+      </div>
+    </nav>
+  </div>
   
 {% endblock%}
 

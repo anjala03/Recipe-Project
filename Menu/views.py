@@ -7,13 +7,15 @@ from Menu.models import Recipe
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout
 # Create your views here.
 def basepage(request):
     return render(request, "base.html")
 
 #login required is the decorators which will ensure that the add recipe page will only be acessed after login is successfull
 
-@login_required
+@login_required(login_url='/login/')
+# in case to redirect the user to the login page when tried to access without loging in (if this not done only the error message is displayed), have to define LOGIN_URL in settings.py as LOGIN_URL = '/login/' OR you can pass it as a parameter in the function as login_url='/login/'
 def add_recipe(request):
     if request.method=="POST":
         data=request.POST # this can only be used to get the text data, for files such image, use request.FILES method as below
@@ -45,7 +47,7 @@ def add_recipe(request):
 #this is done because as  whenever you use post method there is by default the usecase of get method  which will show the template only, so the empty list is parsed there
 
 
-
+@login_required(login_url='/login/') 
 def show_recipes(request):
     QuerySet=Recipe.objects.all()
     context={'recipes':QuerySet}
@@ -53,7 +55,7 @@ def show_recipes(request):
     return render(request, "htmlsss/show_recipe.html",context)
 
 
-@login_required
+@login_required(login_url='/login/')
 def delete_recipe(request, id):
     recipe = get_object_or_404(Recipe, id=id)
     # this is to check if the id is available or not, it wil return none in case no such id is available. Has to pass the modle name as the first parameter
@@ -67,7 +69,7 @@ def delete_recipe(request, id):
 #    queryset.delete()
 #    return redirect("/show_recipes")
 
-@login_required
+@login_required(login_url='/login/')
 def update(request, id):
     recipe_obj= get_object_or_404(Recipe, id=id)
     if request.method=="POST":
@@ -91,6 +93,7 @@ def update(request, id):
         recipe_obj= get_object_or_404(Recipe, id=id)
         return render(request, "htmlsss/update.html", context={"recipe_obj":recipe_obj})
 
+@login_required(login_url='/login/')
 def search_recipe(request):
     if request.method=="POST":
         recipe_Name=request.POST.get("query").strip()
@@ -113,10 +116,13 @@ def loginpage(request):
             #autheticate method is used to check the credentails mapping with the database, if the credentials are right returns the user object else returns the None
             user=authenticate(username=username, password=password)
             if user is not None:
+                #this is to maintain the session the use of login method which uses two parameters request and userobject
+                login(request, user)
                 return redirect ("/add_recipe")
-            messages.info(request, "Invalid User")
-        messages.info(request, "Please register first") 
-
+            messages.error(request, "Invalid Credentials")
+            return redirect("/login")
+        messages.error(request, "Invalid Username") 
+        return redirect("/login")
     return render(request, "htmlsss/login.html", context={"username":[], "password":[]})
       
 
@@ -145,6 +151,10 @@ def register(request):
         return redirect("/login")
     return render(request, "htmlsss/register.html", context={"firstname":[], "lastname":[], "username":[], "password":[]})
 
+def logoutpage(request):
+    if request.method=="GET":
+        logout(request)
+        return redirect("/login")
 
 
     

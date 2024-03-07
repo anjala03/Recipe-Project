@@ -129,9 +129,13 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# this has to be added for media files, all is similar to almost all, the only difference is in the value of MEDIA. The value should be the folder where the images are loaded. Here 'veges'
+# this has to be added for media files, all is similar to almost all, the only difference is in the value of MEDIA. The value should be the folder where the images are loaded. Here 'veges' is inside the media folder 
 MEDIA = 'media'
 
 MEDIA_URL = f'/{MEDIA}/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, MEDIA)
+
+# LOGIN_URL = '/login/'
+#  LOGIN_URL = '/login/' to direct the user to login while the login_required decorator is used. This is done only when the paramater is not passed on the decorator itself. If this is done no need to pass para in decorator
+
