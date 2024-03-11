@@ -102,7 +102,7 @@ def search_recipe(request):
         desired_recipe=Recipe.objects.filter(Q(recipe_name__startswith=recipe_Name)|Q(recipe_name__icontains=recipe_Name))
         context={"desired_recipe":desired_recipe}
         return render(request, "htmlsss/search_recipe.html", context)
-    return render(request, "recipe.html")
+    return render(request, "htmlsss/add_recipe.html")
     
 def success_msg(request):
     return render (request, "htmlsss/success.html")
@@ -142,12 +142,14 @@ def register(request):
             username=username,
             first_name=firstname,
             last_name=lastname
+            #in django database the first_name, last_name is by default , in case of use of any thing other than this may throw some errors
+
             )
         #this is done so that password is hashed, the set password method changes password into something that is not understandable.
         user.set_password(password)
         user.save()
         messages.info(request, "Congratulations!!!Registration done successfully.")
-
+        #messages takes two parameters, request and the mesage you want to display, to use messages you have to import it first
         return redirect("/login")
     return render(request, "htmlsss/register.html", context={"firstname":[], "lastname":[], "username":[], "password":[]})
 
