@@ -6,7 +6,7 @@ from .models import *
 fake=Faker()
 
 def afunction(n=10)->None:
-    for _ in range(n):
+    for _ in range(0,n):
         dms=["humanity", "sociology", "psychology", "science", "pharmacy", "physics", "botany"]
         department_obj=Department.objects.create(department=random.choice(dms))
         student_ids=Student_id.objects.create(student_id=f"ST-00{random.randint(1,20)}")
